@@ -28,13 +28,10 @@ namespace pet_hotel
     }
     public class Pet
     {
-        public string name { get; set; }
-        public string color { get; set; }
-        public string checkedInAt { get; set; }
 
-        public int petOwnderid { get; set; }
-        public int id { get; set; }
-        public string breed { get; set; }
+        public string id {get;set;}
+        public string name { get; set; }
+        public DateTime checkedInAt { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PetBreedType BreedTypes { get; set; }
@@ -45,7 +42,6 @@ namespace pet_hotel
         [ForeignKey("ownedBy")]
         public int petOwnerById { get; set; }
         //  add something here after petOwner built out
-        public PetOwner ownedBy {get;set;}
 
     }
 }
