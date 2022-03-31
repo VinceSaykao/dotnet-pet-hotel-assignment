@@ -12,6 +12,7 @@ namespace pet_hotel
         Poodle,
         Bull_Dog,
         Tabby,
+        Labrador,
     }
 
     public enum PetColorType 
@@ -20,26 +21,32 @@ namespace pet_hotel
         Blue,
         Tiger,
         Spots,
+
+        Black,
+
+        Golden, 
     }
-    public class Pet {
+    public class Pet 
+    {
         public int Id {get; set;}
-        public string Name { get; set;}
-        public string Color {get; set; }
-        public string checkedInAt {get; set;}
+        public string name { get; set;}
+        public string color {get; set; }
+        // public string checkedInAt {get; set;}
 
-        public int petOwnderid {get; set;}
+        public int petOwner {get; set;}
 
-        public string Breed {get; set;}
+        public string breed {get; set;}
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PetBreedType BreedTypes { get; set; }
+        public PetBreedType breedTypes { get; set; }
     
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PetColorType ColorTypes {get; set;}
+        public PetColorType colorTypes {get; set;}
 
-        [ForeignKey("petOwner")]
-        public int petOwner {get; set; }
-//  add something here after petOwner built out
+        [ForeignKey("ownedBy")]
+        public int petOwnerById {get; set; }
+
+        public PetOwner ownedBy {get;set;}
 
     }
 }
