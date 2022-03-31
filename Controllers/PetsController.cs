@@ -24,7 +24,7 @@ namespace pet_hotel.Controllers
         [HttpGet]
         public IEnumerable<Pet> GetPets() {
             // return new List<Pet>();
-             Console.WriteLine("get all bakers");
+            Console.WriteLine("get all bakers");
             return _context.PetsTable;
         }
 
