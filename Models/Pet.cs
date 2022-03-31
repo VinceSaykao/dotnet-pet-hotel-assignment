@@ -15,6 +15,7 @@ namespace pet_hotel
         Boxer,
         Labrador,
         Retriever
+
     }
 
     public enum PetColorType
