@@ -5,41 +5,46 @@ using System;
 
 namespace pet_hotel
 {
-    public enum PetBreedType 
+    public enum PetBreedType
     {
-        Shiba_Inu,
-        German_Shepard,
+        Shepard,
+        Beagle,
         Poodle,
-        Bull_Dog,
-        Tabby,
+        Bulldog,
+        Terrier,
+        Boxer,
+        Labrador,
+        Retriever
     }
 
-    public enum PetColorType 
+    public enum PetColorType
     {
-        Red,
-        Blue,
-        Tiger,
-        Spots,
+        White,
+        Black,
+        Golden,
+        Tricolor,
+        Spotted
     }
-    public class Pet {
-        public int Id {get; set;}
-        public string Name { get; set;}
-        public string Color {get; set; }
-        public string checkedInAt {get; set;}
+    public class Pet
+    {
+        public string name { get; set; }
+        public string color { get; set; }
+        public string checkedInAt { get; set; }
 
-        public int petOwnderid {get; set;}
-
-        public string Breed {get; set;}
+        public int petOwnderid { get; set; }
+        public int id { get; set; }
+        public string breed { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PetBreedType BreedTypes { get; set; }
-    
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PetColorType ColorTypes {get; set;}
 
-        [ForeignKey("petOwner")]
-        public int petOwner {get; set; }
-//  add something here after petOwner built out
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PetColorType ColorTypes { get; set; }
+
+        [ForeignKey("ownedBy")]
+        public int petOwnerById { get; set; }
+        //  add something here after petOwner built out
+        public PetOwner ownedBy {get;set;}
 
     }
 }
