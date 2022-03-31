@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace dotnet_bakery.Migrations
 {
-    public partial class firsttables : Migration
+    public partial class CreatePetTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +16,7 @@ namespace dotnet_bakery.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    emailAddress = table.Column<string>(type: "text", nullable: true),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    petCount = table.Column<int>(type: "integer", nullable: true)
+                    name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,28 +29,36 @@ namespace dotnet_bakery.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Color = table.Column<string>(type: "text", nullable: true),
-                    checkedInAt = table.Column<string>(type: "text", nullable: true),
-                    petOwnderid = table.Column<int>(type: "integer", nullable: false),
-                    Breed = table.Column<string>(type: "text", nullable: true),
+                    name = table.Column<string>(type: "text", nullable: true),
+                    checkedInAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BreedTypes = table.Column<int>(type: "integer", nullable: false),
                     ColorTypes = table.Column<int>(type: "integer", nullable: false),
-                    petOwner = table.Column<int>(type: "integer", nullable: false)
+                    petOwnerById = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PetsTable", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PetsTable_PetOwnersTable_petOwnerById",
+                        column: x => x.petOwnerById,
+                        principalTable: "PetOwnersTable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetsTable_petOwnerById",
+                table: "PetsTable",
+                column: "petOwnerById");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PetOwnersTable");
+                name: "PetsTable");
 
             migrationBuilder.DropTable(
-                name: "PetsTable");
+                name: "PetOwnersTable");
         }
     }
 }
