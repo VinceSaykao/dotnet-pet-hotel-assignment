@@ -60,9 +60,52 @@ namespace pet_hotel.Controllers
         {
             _context.Add(pet);
             _context.SaveChanges();
-            return CreateAtAction(nameof(Create),
+            return CreatedAtAction(nameof(Create),
             new{id=pet.Id}, pet);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Pet pet = _context.PetsTable.SingleOrDefault(pet => pet.Id == id);
+
+            if(pet is null) {
+                return NotFound();
+
+            }
+
+            _context.PetsTable.Remove(pet);
+            _context.SaveChanges(); // really make the change
+
+            // 204
+            return NoContent();
+        }
+
+    //  [HttpPut("{id}")]
+    //     public IActionResult Put(int id, Pet pet) {
+    //         Console.WriteLine("in PUT");
+    //         if (id != pet.Id) {
+    //             return BadRequest();
+    //         }
+    //         // update in DB
+    //         _context.Update(pet);
+    //         _context.SaveChanges();
+    //         return NoContent();
+    //     }
+
+     [HttpPut("{id}/checkin")]
+        public IActionResult Put(int id, Pet pet) {
+            Console.WriteLine("in PUT");
+            if (id != pet.Id) {
+                return BadRequest();
+            }
+            // update in DB
+            DateTime now = DateTime.Now;
+            _context.Update(pet.checkedInAt = now);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
 
         // [HttpGet]
         // public IEnumerable <PetOwner> GetPets() {
