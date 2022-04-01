@@ -43,6 +43,27 @@ namespace pet_hotel.Controllers
             return _context.PetsTable;
         }
 
+        
+        [HttpGet("{id}")]
+        public ActionResult <Pet> getById(int id ) {
+            Pet pet = _context.PetsTable.SingleOrDefault(pet => pet.Id == id);
+            // Pet pet = _context.PetsTable.SingleOrDefault(pet => pet.Id == id);
+
+            if (pet is null){
+                return NotFound();
+            }
+            return pet; 
+        }
+
+        [HttpPost]
+        public IActionResult Create(Pet pet)
+        {
+            _context.Add(pet);
+            _context.SaveChanges();
+            return CreateAtAction(nameof(Create),
+            new{id=pet.Id}, pet);
+        }
+
         // [HttpGet]
         // public IEnumerable <PetOwner> GetPets() {
         //     Console.WriteLine("inside get PetOwners");
