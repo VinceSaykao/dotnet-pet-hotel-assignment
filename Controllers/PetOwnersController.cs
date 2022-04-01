@@ -47,7 +47,6 @@ namespace pet_hotel.Controllers
         }  
 
         [HttpDelete("{id}")]
-
         public IActionResult Delete(int id)
         {
             PetOwner petowner = _context.PetOwnersTable.SingleOrDefault(p => p.Id == id);
